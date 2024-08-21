@@ -2,7 +2,7 @@
  * File: clients.c
  * Author : ThienBao3617 - skytold
  * Description: This file manages client connections. It includes functions for connecting to
- *              other servers, accepting new connections, handling client messages, and terminating connections.
+ *              other servers, accepting new connections, handling client messages, terminating connections and sending messages.
  *
  * Error Handling:
  *  - Checks socket creation and connection operations and provides meaningful error messages.
