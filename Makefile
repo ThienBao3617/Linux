@@ -18,6 +18,7 @@
 #  - CFLAGS: Compiler flags for warnings and debugging.
 #  - OBJ: Object files generated from the source files.
 
+.PHONY: clean
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -g -Iheader
@@ -48,4 +49,4 @@ $(TARGET): $(OBJ)
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
 
-.PHONY: clean
+
