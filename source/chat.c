@@ -11,8 +11,8 @@
  *
  * Usage:
  *  - Compile the program using the provided Makefile.
- *  - First run the Makefile with: make
- *  - Finally run the program with: ./chat <port>
+ *  - Firstly build the App with: make
+ *  - Finally run the App with: ./chat <port>
  */
 
 #include "clients.h"
