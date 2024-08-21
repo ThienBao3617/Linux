@@ -1,3 +1,20 @@
+/*
+ * File: chat.c
+ * Author : ThienBao3617 - skytold
+ * Description: Main program file for the chat application. This file contains the entry point
+ *              of the program and handles the initialization of server sockets, client connections,
+ *              and user commands from the terminal.
+ *
+ * Error Handling:
+ *  - Provides meaningful error messages when socket creation, binding, and listening fail.
+ *  - Checks return values of all critical functions and handles errors appropriately.
+ *
+ * Usage:
+ *  - Compile the program using the provided Makefile.
+ *  - First run the Makefile with: make
+ *  - Finally run the program with: ./chat <port>
+ */
+
 #include "clients.h"
 #include "utils.h"
 #include <stdio.h>
@@ -15,8 +32,19 @@
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 1024
 
+/*
+ * Function: main
+ * Description: Entry point of the chat application server. It initializes
+ *               the server socket, listens for incoming connections, and
+ *               handles user commands and client connections.
+ * Input:
+ *  argc - number of command-line arguments
+ *  argv - array of command-line argument strings
+ * Output:
+ *  Return EXIT_SUCCESS on successful completion, otherwise EXIT_FAILURE.
+ */
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])  
 {
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <port>\n", argv[0]);
