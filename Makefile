@@ -25,7 +25,6 @@ CFLAGS = -Wall -g -Iheader
 # Directories
 SRCDIR = source
 OBJDIR = objects
-# No BINDIR, output binary directly in the root directory
 
 # Source files
 SRC = $(SRCDIR)/chat.c $(SRCDIR)/clients.c $(SRCDIR)/utils.c
