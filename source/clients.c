@@ -1,3 +1,14 @@
+/*
+ * File: clients.c
+ * Author : ThienBao3617 - skytold
+ * Description: This file manages client connections. It includes functions for connecting to
+ *              other servers, accepting new connections, handling client messages, and terminating connections.
+ *
+ * Error Handling:
+ *  - Checks socket creation and connection operations and provides meaningful error messages.
+ *  - Ensures that connections do not exceed the maximum number of allowed clients.
+ */
+
 #include "clients.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,6 +24,16 @@
 
 struct Client clients[MAX_CLIENTS];
 int client_count = 0;
+
+/*
+ * Function: connect_to_server
+ * Description: Connects to a server using the specified IP address and port.
+ * Input:
+ *  dest_ip - IP address of the server
+ *  dest_port - Port number of the server
+ * Output:
+ *  None (prints status messages to stdout)
+ */
 void connect_to_server(const char *dest_ip, int dest_port) 
 {
     struct sockaddr_in server_addr;
@@ -50,6 +71,14 @@ void connect_to_server(const char *dest_ip, int dest_port)
     }
 }
 
+/*
+ * Function: accept_new_connection
+ * Description: Accepts a new incoming connection and adds it to the list of clients.
+ * Input:
+ *  server_socket - Socket file descriptor for the server
+ * Output:
+ *  None (prints status messages to stdout)
+ */
 void accept_new_connection(int server_socket) 
 {
     struct sockaddr_in client_addr;
@@ -74,6 +103,14 @@ void accept_new_connection(int server_socket)
     }
 }
 
+/*
+ * Function: handle_client
+ * Description: Receives and processes messages from a client. Handles disconnections.
+ * Input:
+ *  client_socket - Socket file descriptor for the client
+ * Output:
+ *  None (prints received message or disconnection status to stdout)
+ */
 void handle_client(int client_socket) 
 {
     char buffer[BUFFER_SIZE];
@@ -109,6 +146,14 @@ void handle_client(int client_socket)
     }
 }
 
+/*
+ * Function: terminate_connection
+ * Description: Terminates the connection with a client identified by the given ID.
+ * Input:
+ *  id - ID of the client connection to terminate
+ * Output:
+ *  None (prints status messages to stdout)
+ */
 void terminate_connection(int id) 
 {
     if (id >= 0 && id < client_count) {
@@ -134,6 +179,15 @@ void terminate_connection(int id)
     }
 }
 
+/*
+ * Function: send_message
+ * Description: Sends a message to the client identified by the given ID.
+ * Input:
+ *  id - ID of the client to send the message to
+ *  message - Message to send
+ * Output:
+ *  None (prints status messages to stdout)
+ */
 void send_message(int id, const char *message) 
 {
     if (id >= 0 && id < client_count) {
