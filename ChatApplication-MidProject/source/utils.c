@@ -1,11 +1,8 @@
 /*
  * File: utils.c
- * Author : ThienBao3617 - skytold
- * Description: Utility functions used across the chat application, including displaying menus,
- *              showing IP addresses, listing connections, and other helper functions.
- *
- * Error Handling:
- *  - Checks the results of system calls like getifaddrs and provides error messages.
+ * Author: ThienBao3617 
+ * Description: Provides utility functions for the chat application, including displaying the command
+ *              menu, showing IP/port information, and listing active connections.
  */
 
 #include "utils.h"
@@ -23,11 +20,7 @@
 
 /*
  * Function: display_menu
- * Description: Displays the list of available commands of the chat application for the user.
- * Input:
- *  None
- * Output:
- *  None (prints the menu to stdout)
+ * Description: Displays the available commands for the chat application.
  */
 void display_menu() 
 {
@@ -45,11 +38,7 @@ void display_menu()
 
 /*
  * Function: show_ip
- * Description: Retrieves and displays the IP Address of the running application.
- * Input:
- *  None
- * Output:
- *  None (prints IP Address to stdout)
+ * Description: Retrieves and displays the IP address of the running application.
  */
 void show_ip() 
 {
@@ -83,10 +72,8 @@ void show_ip()
 /*
  * Function: show_port
  * Description: Displays the port number on which the application is listening.
- * Input:
- *  port - Port number of the application
- * Output:
- *  None (prints port number to stdout)
+ * Parameters:
+ *  - port: Port number of the application
  */
 void show_port(int port) 
 {
@@ -95,11 +82,7 @@ void show_port(int port)
 
 /*
  * Function: list_connections
- * Description: Lists all active connections with their IDs, IP Addresses, and port numbers.
- * Input:
- *  None
- * Output:
- *  None (prints connection list to stdout)
+ * Description: Lists all active connections with their IDs, IP addresses, and ports.
  */
 void list_connections() 
 {
@@ -112,7 +95,7 @@ void list_connections()
     else {
         printf("-----------------------------------------\n");
         for (int i = 0; i < client_count; i++) {
-            printf("%d  |      %s      |  %d\n", i, inet_ntoa(clients[i].address.sin_addr), ntohs(clients[i].address.sin_port));
+            printf("%d  |      %s       |  %d\n", i, inet_ntoa(clients[i].address.sin_addr), ntohs(clients[i].address.sin_port));
         }
         printf("*****************************************\n");
     }

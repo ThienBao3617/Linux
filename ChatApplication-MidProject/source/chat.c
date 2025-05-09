@@ -1,18 +1,12 @@
 /*
  * File: chat.c
- * Author : ThienBao3617 - skytold
- * Description: Main program file for the chat application. This file contains the entry point
- *              of the program and handles the initialization of server sockets, client connections,
- *              and user commands from the terminal.
- *
- * Error Handling:
- *  - Provides meaningful error messages when socket creation, binding, and listening fail.
- *  - Checks return values of all critical functions and handles errors appropriately.
+ * Author: ThienBao3617
+ * Description: Main program for the chat application. Initializes the server socket, listens for
+ *              incoming connections, and processes user commands via a CLI.
  *
  * Usage:
- *  - Compile the program using the provided Makefile.
- *  - Firstly build the App with: make
- *  - Finally run the App with: ./chat <port>
+ *  - Build with: make
+ *  - Run with: ./chat <port>
  */
 
 #include "clients.h"
@@ -29,21 +23,20 @@
 #include <ifaddrs.h>
 #include <errno.h>
 
+// Constants (defined in clients.h as well, repeated for clarity)
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 1024
 
 /*
  * Function: main
- * Description: Entry point of the chat application server. It initializes
- *               the server socket, listens for incoming connections, and
- *               handles user commands and client connections.
- * Input:
- *  argc - number of command-line arguments
- *  argv - array of command-line argument strings
- * Output:
- *  Return EXIT_SUCCESS on successful completion, otherwise EXIT_FAILURE.
+ * Description: Initializes the server socket, listens for connections, and handles user commands
+ *              and client messages using select() for I/O multiplexing.
+ * Parameters:
+ *  - argc: Number of command-line arguments
+ *  - argv: Array of command-line argument strings
+ * Returns:
+ *  - EXIT_SUCCESS on successful completion, EXIT_FAILURE on error
  */
-
 int main(int argc, char *argv[])  
 {
     if (argc != 2) {
@@ -56,39 +49,47 @@ int main(int argc, char *argv[])
     struct sockaddr_in server_addr;
     fd_set read_fds;
 
+    // Initialize client array
     memset(clients, 0, sizeof(clients));
 
+    // Create server socket
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (server_socket < 0) {
         perror("Socket creation failed");
         exit(EXIT_FAILURE);
     }
 
+    // Configure server address
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(port);
 
+    // Bind socket to address
     if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
         perror("Bind failed");
         close(server_socket);
         exit(EXIT_FAILURE);
     }
 
+    // Listen for incoming connections
     if (listen(server_socket, MAX_CLIENTS) < 0) {
         perror("Listen failed");
         close(server_socket);
         exit(EXIT_FAILURE);
     }
 
+    // Display initial information
     display_menu();
     printf("Application is listening on port %d\n", port);
 
+    // Main loop for handling connections and commands
     while (1) {
         FD_ZERO(&read_fds);
         FD_SET(STDIN_FILENO, &read_fds);
         FD_SET(server_socket, &read_fds);
         max_sd = server_socket;
 
+        // Add client sockets to the set
         for (int i = 0; i < client_count; i++) {
             int sd = clients[i].socket;
             if (sd > 0) 
@@ -97,11 +98,11 @@ int main(int argc, char *argv[])
                 max_sd = sd;
         }
 
+        // Wait for activity on any socket
         activity = select(max_sd + 1, &read_fds, NULL, NULL, NULL);
-
         if ((activity < 0) && (errno != EINTR)) {}
 
-        // Handle incoming command from stdin (USER)
+        // Handle user commands from stdin
         if (FD_ISSET(STDIN_FILENO, &read_fds)) {
             char command[BUFFER_SIZE];
             fgets(command, sizeof(command), stdin);
@@ -159,7 +160,7 @@ int main(int argc, char *argv[])
             accept_new_connection(server_socket);
         }
 
-        // Handle new incoming messages from clients
+        // Handle messages from clients
         for (int i = 0; i < client_count; i++) {
             int sd = clients[i].socket;
             if (FD_ISSET(sd, &read_fds)) {
@@ -167,5 +168,5 @@ int main(int argc, char *argv[])
             }
         }
     }
-    return 0;
+    return EXIT_SUCCESS;
 }

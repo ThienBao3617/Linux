@@ -1,24 +1,14 @@
 # File: Makefile
-# Description: Makefile to compile the chat application. It handles the compilation of
-#              multiple C source files and links them into a single executable binary.
+# Description: Builds the chat application by compiling source files and linking them into an executable.
 #
 # Targets:
-#  - all: Compiles all source files and creates the executable.
-#  - clean: Removes compiled object files and the executable.
+#  - all: Default target to build the chat application
+#  - clean: Removes compiled files and the executable
 #
 # Usage:
-#  - To compile the application, run: make
-#  - To clean the directory, run: make clean
-#
-# Error Handling:
-#  - Checks if the compiler and linker commands execute successfully.
-#
-# Variables:
-#  - CC: Compiler used for building the program (default: gcc).
-#  - CFLAGS: Compiler flags for warnings and debugging.
-#  - OBJ: Object files generated from the source files.
+#  - Build: make
+#  - Clean: make clean
 
-.PHONY: clean
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -g -Iheader
@@ -27,26 +17,27 @@ CFLAGS = -Wall -g -Iheader
 SRCDIR = source
 OBJDIR = objects
 
-# Source files
+# Source and object files
 SRC = $(SRCDIR)/chat.c $(SRCDIR)/clients.c $(SRCDIR)/utils.c
-
-# Object files
 OBJ = $(OBJDIR)/chat.o $(OBJDIR)/clients.o $(OBJDIR)/utils.o
 
-# Executable
+# Executable name
 TARGET = chat
 
-# Create object directory and compile
+# Default target
+all: $(TARGET)
+
+# Compile source files to object files
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Link object files to create the final executable
+# Link object files to create the executable
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+	$(CC) $(OBJ) -o $(TARGET)
 
-# Clean up the build
+# Clean up build artifacts
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
 
-
+.PHONY: all clean
