@@ -1,6 +1,8 @@
 # A Chat Application for Remote Message Exchange
 ## Overview
 This project is a peer-to-peer chat application written in C, utilizing **TCP sockets** to enable real-time message exchange between multiple clients on a Linux system. It supports up to 10 concurrent connections, managed through I/O multiplexing with **select()**, and provides a **CLI** for user interaction.
+## Link of Project's Requirement
+- https://docs.google.com/document/d/1_hkphcnSYAvj2U1Cd7mMGs-KA7oBg5R8Y031sHh61Lg/edit
 ## Table of Contents
 - Features
 
