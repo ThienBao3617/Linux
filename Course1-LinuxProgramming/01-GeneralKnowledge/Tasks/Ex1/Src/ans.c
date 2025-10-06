@@ -1,6 +1,6 @@
 #include "add.h"
 
-int answer()
+int ans()
 {
     setSum(36);
     return add(17); 
