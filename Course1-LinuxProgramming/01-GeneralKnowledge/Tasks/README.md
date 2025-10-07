@@ -33,4 +33,19 @@ Shared Library Objects:
     - **r**: Replace existing files in the archive.  
     - **c**: Create the archive if it doesn’t exist.  
     - **s**: Write an index into the archive.  
-The library is placed in LIB_STATIC_DIR.  
+=> The library is placed in LIB_STATIC_DIR.  
+- ***Target all***: This is the default target (run when you type make). It depends on create_objs, create_shared_lib, and create_static_lib, so those targets are executed first.  
+
+- ***Shared Library Linking***:  
+    - Links main.o with the shared library (libAddAnswerShared.so).  
+    - **L$(LIB_SHARED_DIR)**: Tells the linker where to find the shared library.  
+    - **lAddAnswerShared**: Links the shared library (the lib prefix and .so suffix are omitted).  
+=> The resulting executable is placed in BIN_SHARED_DIR.  
+
+- ***Static Library Linking***:  
+    - Links main.o with the static library (libAddAnswerStatic.a).  
+    - **L$(LIB_STATIC_DIR)**: Tells the linker where to find the static library.  
+    - **lAddAnswerStatic**: Links the static library (the lib prefix and .a suffix are omitted).  
+=> The resulting executable is placed in BIN_STATIC_DIR.  
+
+- ***Target clear***: This target cleans up the project by removing all generated files (object files, libraries, and executables). Useful for starting fresh or freeing up space.
