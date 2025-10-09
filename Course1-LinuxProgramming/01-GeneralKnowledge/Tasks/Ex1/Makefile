@@ -12,7 +12,13 @@ LIB_STATIC_DIR := $(LIB_DIR)/static
 
 C_FLAGS := -I$(INC_DIR)
 
-.PHONY: all clean create_dirs
+.PHONY: all clean create_dirs run-shared run-static
+
+run-shared: all
+	LD_LIBRARY_PATH=$(LIB_SHARED_DIR):$$LD_LIBRARY_PATH ./bin/shared/use-shared-library
+
+run-static: all
+	./bin/static/statically-linked
 
 all: create_dirs create_objs create_shared_lib create_static_lib
 	# link shared lib
