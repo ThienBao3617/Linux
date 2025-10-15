@@ -1,10 +1,10 @@
 .PHONY: all runw runr clean
 
-# Build chương trình
+# Default target: build executable
 all:
 	gcc -Wall -Wextra -O2 -o cmdLineArg cmdLineArg.c
 
-# Chạy ở chế độ ghi (write)
+# Run at write mode
 runw: all
 	@echo "=== Writing to file ==="
 	@./cmdLineArg myfile.txt 12 w "Hello Linux!"
@@ -12,11 +12,11 @@ runw: all
 	@cat myfile.txt || echo "(no myfile.txt found)"
 	@echo ""
 
-# Chạy ở chế độ đọc (read)
+# Run at read mode
 runr: all
 	@echo "=== Reading from file ==="
 	@./cmdLineArg myfile.txt 12 r
 
-# Xóa file build và file dữ liệu
+# Clean build file and output file
 clean:
 	rm -f cmdLineArg myfile.txt

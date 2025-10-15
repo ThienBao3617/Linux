@@ -11,6 +11,6 @@ run: all
 	@echo "\n--- text.txt content after run ---"
 	@cat text.txt || echo "(no text.txt found)"
 
-# Clean build artifacts and output file
+# Clean build file and output file
 clean:
 	rm -f fileSeek text.txt
